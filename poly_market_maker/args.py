@@ -16,7 +16,7 @@ def get_args(args) -> dict:
         "--sync-interval",
         type=int,
         required=False,
-        default=120,
+        default=30,
         help="The number of seconds in between synchronizations",
     )
 
@@ -68,7 +68,7 @@ def get_args(args) -> dict:
     parser.add_argument(
         "--condition-id",
         type=str,
-        required=False,
+        required=True,
         help="The condition id of the market being made",
     )
 
@@ -84,13 +84,6 @@ def get_args(args) -> dict:
         type=str,
         required=True,
         help="Strategy configuration file path",
-    )
-
-    parser.add_argument(
-        "--num-markets",
-        type=int,
-        required=False,
-        help="How many markets to run in parallel",
     )
 
     return parser.parse_args(args)

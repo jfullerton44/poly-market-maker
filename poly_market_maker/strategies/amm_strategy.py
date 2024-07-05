@@ -49,7 +49,7 @@ class AMMStrategy(BaseStrategy):
             max_collateral=config.get("max_collateral"),
         )
 
-    def get_orders(self, orderbook: OrderBook, target_prices, spread):
+    def get_orders(self, orderbook: OrderBook, target_prices):
         orders_to_cancel = []
         orders_to_place = []
 
@@ -83,7 +83,7 @@ class AMMStrategy(BaseStrategy):
                 new_size = expected_size
             # otherwise get the remaining size
             else:
-                new_size = round(expected_size - open_size, 0)
+                new_size = round(expected_size - open_size, 2)
 
             if new_size >= MIN_SIZE:
                 orders_to_place += [

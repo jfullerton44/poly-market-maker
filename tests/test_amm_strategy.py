@@ -85,7 +85,7 @@ class TestAMMStrategy(TestCase):
 
         target_prices = {Token.A: 0.6, Token.B: 0.4}
         (orders_to_cancel, _) = strategy.get_orders(
-            order_book_manager.get_order_book(), target_prices, 0.1
+            order_book_manager.get_order_book(), target_prices
         )
 
         self.assertEqual(orders_to_cancel, [])
@@ -97,7 +97,7 @@ class TestAMMStrategy(TestCase):
         order_book_manager.update_orders()
 
         (orders_to_cancel, _) = strategy.get_orders(
-            order_book_manager.get_order_book(), target_prices, 0.1
+            order_book_manager.get_order_book(), target_prices
         )
 
         self.assertEqual(len(orders_to_cancel), orders_placed)
