@@ -61,7 +61,7 @@ class StrategyManager:
         token_prices = self.get_token_prices()
         self.logger.debug(f"{token_prices}")
         (orders_to_cancel, orders_to_place) = self.strategy.get_orders(
-            orderbook, token_prices
+            orderbook, token_prices, self.order_book_manager.reward_spread
         )
 
         self.logger.debug(f"order to cancel: {len(orders_to_cancel)}")

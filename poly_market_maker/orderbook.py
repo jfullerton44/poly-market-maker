@@ -41,11 +41,13 @@ class OrderBookManager:
             refresh takes place.
     """
 
-    def __init__(self, refresh_frequency: int, max_workers: int = 5):
+    def __init__(self, refresh_frequency: int, max_workers: int = 5, index: int = 0, reward_spread:int = 0):
         self.logger = logging.getLogger(self.__class__.__name__)
 
         assert isinstance(refresh_frequency, int)
         assert isinstance(max_workers, int)
+        self.index = index
+        self.reward_spread = reward_spread
 
         self.refresh_frequency = refresh_frequency
         self.get_orders_function = None
@@ -326,7 +328,7 @@ class OrderBookManager:
 
     def _run_get_orders(self):
         try:
-            orders = self.get_orders_function()
+            orders = self.get_orders_function(self.index)
             return orders
         except Exception as e:
             self.logger.error(f"Exception fetching orderbook! Error: {e}")
@@ -335,7 +337,7 @@ class OrderBookManager:
     def _run_get_balances(self):
         try:
             balances = (
-                self.get_balances_function()
+                self.get_balances_function(self.index)
                 if self.get_balances_function is not None
                 else None
             )
@@ -402,7 +404,7 @@ class OrderBookManager:
 
         def func():
             try:
-                new_order = place_order_function(order)
+                new_order = place_order_function(order, self.index)
 
                 if new_order is not None:
                     with self._lock:

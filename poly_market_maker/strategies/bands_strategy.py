@@ -21,13 +21,17 @@ class BandsStrategy(BaseStrategy):
                 f"Config is invalid ({e}). Treating the config as if it has no bands."
             )
 
-    def get_orders(self, orderbook: OrderBook, target_prices):
+    def get_orders(self, orderbook: OrderBook, target_prices, spread):
         """
         Synchronize the orderbook by cancelling orders out of bands and placing new orders if necessary
         """
         orders_to_place = []
         orders_to_cancel = []
-
+        spread = float(spread)/100
+        self.bands.bands[0].avg_margin = max(spread - .015, 0.01)
+        self.bands.bands[0].min_margin = max(spread - .025, 0.01)
+        self.bands.bands[0].max_margin = max(spread - .01, self.bands.bands[0].min_margin)
+        self.logger.debug(f"spread: {spread} ")
         for token in Token:
             self.logger.debug(f"{token.value} target price: {target_prices[token]}")
 
