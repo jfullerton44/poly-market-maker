@@ -43,6 +43,8 @@ class Value_Market:
             self.rewardPerDollar = 0
         if self.token_price < 0.1 or self.token_price > 0.9:
             self.rewardPerDollar = 0
+        if self.reward_daily_rate < 50:
+            self.rewardPerDollar = self.rewardPerDollar / 10
         print(orderbook)
 
 
