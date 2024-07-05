@@ -96,6 +96,7 @@ class ClobApi:
             self.logger.error(
                 f"Error fetching keeper open orders from the CLOB API: {e}"
             )
+            traceback.print_exc()
             clob_requests_latency.labels(method="get_orders", status="error").observe(
                 (time.time() - start_time)
             )
