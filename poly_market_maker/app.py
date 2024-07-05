@@ -240,7 +240,7 @@ class App:
     def get_condition_ids(self, args) -> list[str]:
         res = []
         next = ""
-        while len(res) < 150 and next != "LTE=":
+        while len(res) < 500 and next != "LTE=":
             resp = self.clob_api.client.get_markets(next_cursor = next)
             resp["data"] = resp["data"]
             res1 = [x for x in resp["data"] if x['rewards']['min_size'] != 0 and x['enable_order_book']== True and x["neg_risk"] == False]
