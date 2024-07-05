@@ -1,8 +1,11 @@
 import logging
 import sys
 import time
+import traceback
 from py_clob_client.client import ClobClient, ApiCreds, OrderArgs, FilterParams
 from py_clob_client.exceptions import PolyApiException
+from py_clob_client.clob_types import OrderArgs, OrderType
+from py_clob_client.order_builder.constants import BUY
 
 from poly_market_maker.utils import randomize_default_price
 from poly_market_maker.constants import OK
@@ -88,7 +91,7 @@ class ClobApi:
                 (time.time() - start_time)
             )
 
-            return [self._get_order(order) for order in resp]
+            return [self._get_order(order) for order in resp["data"]]
         except Exception as e:
             self.logger.error(
                 f"Error fetching keeper open orders from the CLOB API: {e}"
@@ -174,7 +177,8 @@ class ClobApi:
         chain_id,
         private_key,
     ) -> ClobClient:
-        clob_client = ClobClient(host, chain_id, private_key)
+        clob_client = ClobClient(host, chain_id, private_key, None, 1, "0x47A58585dd90D396238376bf57CC6a0eFdCCAa28")
+        clob_client.derive_api_key()
         try:
             if clob_client.get_ok() == OK:
                 self.logger.info("Connected to CLOB API!")
@@ -189,7 +193,7 @@ class ClobApi:
     def _init_client_L2(
         self, host, chain_id, private_key, creds: ApiCreds
     ) -> ClobClient:
-        clob_client = ClobClient(host, chain_id, private_key, creds)
+        clob_client = ClobClient(host, chain_id, private_key, creds, 1, "0x47A58585dd90D396238376bf57CC6a0eFdCCAa28")
         try:
             if clob_client.get_ok() == OK:
                 self.logger.info("Connected to CLOB API!")

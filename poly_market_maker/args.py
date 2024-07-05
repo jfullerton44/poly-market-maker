@@ -68,7 +68,7 @@ def get_args(args) -> dict:
     parser.add_argument(
         "--condition-id",
         type=str,
-        required=True,
+        required=False,
         help="The condition id of the market being made",
     )
 
