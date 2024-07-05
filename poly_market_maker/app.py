@@ -269,8 +269,7 @@ class App:
         while len(conditionIds) < args.num_markets:
             print("Starting market with ",markets[len(conditionIds)].conditionId, markets[len(conditionIds)].question)
             conditionIds.append(markets[len(conditionIds)].conditionId)
-        if args.print_conditions:
+        if args.print_conditions == "true" or args.print_conditions == "True":
             print("Results printed")
             sys.exit()
-
         return conditionIds

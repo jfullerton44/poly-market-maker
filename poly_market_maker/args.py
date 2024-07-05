@@ -95,7 +95,7 @@ def get_args(args) -> dict:
 
     parser.add_argument(
         "--print-conditions",
-        type=bool,
+        type=str,
         required=False,
         help="If the script should print markets it will enter and then exit without placing bids",
     )
