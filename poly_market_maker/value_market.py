@@ -15,7 +15,7 @@ from poly_market_maker.metrics import keeper_balance_amount
 from poly_market_maker.strategy import StrategyManager
 
 class Value_Market:
-    def __init__(self, question: str, conditionId: str, reward_daily_rate: int, reward_max_spread:int, token_id: str, token_price:int, clobClient: ClobClient):
+    def __init__(self, question: str, conditionId: str, reward_daily_rate: int, reward_max_spread:int, token_id: str, token_price:float, clobClient: ClobClient):
         self.question = question
         self.conditionId = conditionId
         self.reward_daily_rate = reward_daily_rate
@@ -40,6 +40,8 @@ class Value_Market:
         maxBid = float(orderbook.bids.pop().price)
         minAsk = float(orderbook.asks.pop().price)
         if minAsk - maxBid > self.reward_max_spread * 1.5:
+            self.rewardPerDollar = 0
+        if self.token_price < 0.1 or self.token_price > 0.9:
             self.rewardPerDollar = 0
         print(orderbook)
 
