@@ -4,7 +4,6 @@ services:
       file: docker-compose.build.yml
       service: app
     environment:
-      - CONDITION_ID=${CONDITION_ID}
       - STRATEGY=bands
       - CONFIG=./config/bands.json
     env_file:
