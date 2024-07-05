@@ -33,7 +33,10 @@ class Value_Market:
         for ask in orderbook.asks:
             if float(ask.price) <= maxPrice:
                 total += float(ask.price) * float(ask.size)
-        self.rewardPerDollar = self.reward_daily_rate / total
+        if total == 0:
+            self.rewardPerDollar = 0
+        else:
+            self.rewardPerDollar = self.reward_daily_rate / total
         maxBid = float(orderbook.bids.pop().price)
         minAsk = float(orderbook.asks.pop().price)
         if minAsk - maxBid > self.reward_max_spread * 1.5:

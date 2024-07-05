@@ -21,4 +21,5 @@ exec python3 -m poly_market_maker \
     --condition-id "$CONDITION_ID" \
     --strategy "$STRATEGY" \
     --strategy-config "$CONFIG" \
-    --num-markets "$NUM_MARKETS"
+    --num-markets "$NUM_MARKETS" \
+    --print-conditions "$PRINT_CONDITIONS"

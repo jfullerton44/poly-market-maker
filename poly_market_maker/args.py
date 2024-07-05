@@ -93,4 +93,11 @@ def get_args(args) -> dict:
         help="How many markets to run in parallel",
     )
 
+    parser.add_argument(
+        "--print-conditions",
+        type=bool,
+        required=False,
+        help="If the script should print markets it will enter and then exit without placing bids",
+    )
+
     return parser.parse_args(args)

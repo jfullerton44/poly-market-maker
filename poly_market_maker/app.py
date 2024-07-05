@@ -240,7 +240,7 @@ class App:
     def get_condition_ids(self, args) -> list[str]:
         res = []
         next = ""
-        while len(res) < 10:
+        while len(res) < 50:
             resp = self.clob_api.client.get_markets(next_cursor = next)
             resp["data"] = resp["data"]
             res1 = [x for x in resp["data"] if x['rewards']['min_size'] != 0 and x['enable_order_book']== True and x["neg_risk"] == False]
@@ -253,11 +253,24 @@ class App:
         markets = []
         for item in res:
             print(item['question'], item['condition_id'])
-            markets.append(value_market.Value_Market(item["question"],item["condition_id"], item["rewards"]["rates"][0]["rewards_daily_rate"], item["rewards"]["max_spread"], item["tokens"][0]["token_id"], item["tokens"][0]["price"], self.clob_api.client))
+            try:
+                question = item["question"]
+                conditionId = item["condition_id"]
+                dailyRate = item["rewards"]["rates"][0]["rewards_daily_rate"]
+                maxSpread = item["rewards"]["max_spread"]
+                tokenId = item["tokens"][0]["token_id"]
+                price = item["tokens"][0]["price"]
+                markets.append(value_market.Value_Market(question,conditionId, dailyRate, maxSpread,tokenId,price, self.clob_api.client))
+            except Exception as e:
+                print(item["question"], item["condition_id"], "failure during parsing")
+                print(e)
         markets.sort(key=lambda x:x.rewardPerDollar, reverse=True)
         conditionIds = []
         while len(conditionIds) < args.num_markets:
             print("Starting market with ",markets[len(conditionIds)].conditionId, markets[len(conditionIds)].question)
             conditionIds.append(markets[len(conditionIds)].conditionId)
-        # sys.exit()
+        if args.print_conditions:
+            print("Results printed")
+            sys.exit()
+
         return conditionIds
