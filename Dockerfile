@@ -12,6 +12,8 @@ RUN ./install.sh
 COPY poly_market_maker poly_market_maker
 COPY bin bin
 COPY logging.yaml .
+COPY logs logs
+RUN chmod 777 logs
 
 WORKDIR /app/bin
-USER keeper
+USER root

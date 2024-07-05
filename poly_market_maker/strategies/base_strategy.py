@@ -14,6 +14,6 @@ class BaseStrategy:
         self.cancel_orders = None
 
     def get_orders(
-        self, orderbook: OrderBook, token_prices
+        self, orderbook: OrderBook, token_prices, spread
     ) -> Tuple[list[Order], list[Order]]:
         pass
