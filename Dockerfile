@@ -14,6 +14,7 @@ COPY bin bin
 COPY logging.yaml .
 COPY logs logs
 RUN chmod 777 logs
+RUN chown -R nonroot:nonroot /app/logs
 
 WORKDIR /app/bin
 USER root
