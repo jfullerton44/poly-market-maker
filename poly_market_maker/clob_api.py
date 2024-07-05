@@ -2,7 +2,7 @@ import logging
 import sys
 import time
 import traceback
-from py_clob_client.client import ClobClient, ApiCreds, OrderArgs, FilterParams
+from py_clob_client.client import ClobClient, ApiCreds, OrderArgs, OpenOrderParams
 from py_clob_client.exceptions import PolyApiException
 from py_clob_client.clob_types import OrderArgs, OrderType
 from py_clob_client.order_builder.constants import BUY
@@ -86,7 +86,7 @@ class ClobApi:
         self.logger.debug("Fetching open keeper orders from the API...")
         start_time = time.time()
         try:
-            resp = self.client.get_orders(FilterParams(market=condition_id))
+            resp = self.client.get_orders(OpenOrderParams(market=condition_id))
             clob_requests_latency.labels(method="get_orders", status="ok").observe(
                 (time.time() - start_time)
             )

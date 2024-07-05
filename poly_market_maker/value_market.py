@@ -1,4 +1,4 @@
-from py_clob_client.client import ClobClient, ApiCreds, OrderArgs, FilterParams
+from py_clob_client.client import ClobClient, ApiCreds, OrderArgs
 
 from poly_market_maker.args import get_args
 from poly_market_maker.price_feed import PriceFeedClob

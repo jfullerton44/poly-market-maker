@@ -3,7 +3,7 @@ import sys
 from prometheus_client import start_http_server
 import time
 
-from py_clob_client.client import ClobClient, ApiCreds, OrderArgs, FilterParams
+from py_clob_client.client import ClobClient, ApiCreds, OrderArgs
 
 from poly_market_maker import value_market
 from poly_market_maker.args import get_args
