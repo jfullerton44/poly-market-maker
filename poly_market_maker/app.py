@@ -57,7 +57,7 @@ class App:
         self.contracts = Contracts(self.web3, self.gas_station)
         conditionIds = []
         if args.condition_id == "":
-            conditionIds = self.get_condition_ids()
+            conditionIds = self.get_condition_ids(args)
         else:
             conditionIds.append(args.condition_id)
         self.markets = []
@@ -237,7 +237,7 @@ class App:
         self.contracts.max_approve_erc20(collateral, self.address, exchange)
         self.contracts.max_approve_erc1155(conditional, self.address, exchange)
 
-    def get_condition_ids(self) -> list[str]:
+    def get_condition_ids(self, args) -> list[str]:
         res = []
         next = ""
         while len(res) < 10:
@@ -256,7 +256,7 @@ class App:
             markets.append(value_market.Value_Market(item["question"],item["condition_id"], item["rewards"]["rates"][0]["rewards_daily_rate"], item["rewards"]["max_spread"], item["tokens"][0]["token_id"], item["tokens"][0]["price"], self.clob_api.client))
         markets.sort(key=lambda x:x.rewardPerDollar, reverse=True)
         conditionIds = []
-        while len(conditionIds) < 3:
+        while len(conditionIds) < args.num_markets:
             print("Starting market with ",markets[len(conditionIds)].conditionId, markets[len(conditionIds)].question)
             conditionIds.append(markets[len(conditionIds)].conditionId)
         # sys.exit()

@@ -86,4 +86,11 @@ def get_args(args) -> dict:
         help="Strategy configuration file path",
     )
 
+    parser.add_argument(
+        "--num-markets",
+        type=int,
+        required=False,
+        help="How many markets to run in parallel",
+    )
+
     return parser.parse_args(args)
