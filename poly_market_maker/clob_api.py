@@ -91,7 +91,7 @@ class ClobApi:
                 (time.time() - start_time)
             )
 
-            return [self._get_order(order) for order in resp["data"]]
+            return [self._get_order(order) for order in resp]
         except Exception as e:
             self.logger.error(
                 f"Error fetching keeper open orders from the CLOB API: {e}"
