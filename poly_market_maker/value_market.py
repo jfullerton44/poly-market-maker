@@ -45,6 +45,8 @@ class Value_Market:
             self.rewardPerDollar = 0
         if self.reward_daily_rate < 50:
             self.rewardPerDollar = self.rewardPerDollar / 10
+        elif self.reward_daily_rate < 100:
+            self.rewardPerDollar = self.rewardPerDollar / 2
         print(orderbook)
 
 
