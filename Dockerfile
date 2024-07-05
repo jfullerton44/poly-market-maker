@@ -15,4 +15,4 @@ COPY logging.yaml .
 COPY logs logs
 
 WORKDIR /app/bin
-USER keeper
+USER root
