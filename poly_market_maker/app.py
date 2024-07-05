@@ -59,7 +59,7 @@ class App:
         if args.condition_id == "":
             conditionIds = self.get_condition_ids(args)
         else:
-            conditionIds.append(args.condition_id)
+            conditionIds= args.condition_id.split(",")
         self.markets = []
         self.price_feeds = []
         self.order_book_managers = []
@@ -240,7 +240,7 @@ class App:
     def get_condition_ids(self, args) -> list[str]:
         res = []
         next = ""
-        while len(res) < 50:
+        while len(res) < 150 and next != "LTE=":
             resp = self.clob_api.client.get_markets(next_cursor = next)
             resp["data"] = resp["data"]
             res1 = [x for x in resp["data"] if x['rewards']['min_size'] != 0 and x['enable_order_book']== True and x["neg_risk"] == False]
@@ -270,6 +270,8 @@ class App:
             print("Starting market with ",markets[len(conditionIds)].conditionId, markets[len(conditionIds)].question)
             conditionIds.append(markets[len(conditionIds)].conditionId)
         if args.print_conditions == "true" or args.print_conditions == "True":
-            print("Results printed")
+            for market in markets:
+                print(market.question,"Reward:", market.rewardPerDollar)
+                print("       ",market.conditionId)
             sys.exit()
         return conditionIds
