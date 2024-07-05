@@ -30,7 +30,8 @@ class BandsStrategy(BaseStrategy):
         spread = float(spread)/100
         self.bands.bands[0].avg_margin = max(spread - .015, 0.01)
         self.bands.bands[0].min_margin = max(spread - .025, 0.01)
-        self.bands.bands[0].max_margin = spread - .01
+        self.bands.bands[0].max_margin = max(spread - .01, self.bands.bands[0].min_margin)
+        self.logger.debug(f"spread: {spread} ")
         for token in Token:
             self.logger.debug(f"{token.value} target price: {target_prices[token]}")
 
