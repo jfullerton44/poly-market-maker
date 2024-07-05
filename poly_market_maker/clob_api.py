@@ -130,6 +130,7 @@ class ClobApi:
             )
         except Exception as e:
             self.logger.error(f"Request exception: failed placing new order: {e}")
+            traceback.print_exc()
             clob_requests_latency.labels(
                 method="create_and_post_order", status="error"
             ).observe((time.time() - start_time))
